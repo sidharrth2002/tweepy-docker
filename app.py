@@ -58,7 +58,7 @@ def get_replies(tweets, tweet_ids, user_name, data_dir='./data'):
                 logging.info("reply of tweet:{}".format(reply.full_text))
                 all_replies.append(reply)
             if (i % count == 0):
-                print(f'Iterated #{i} status Tweets, collected {len(replies)} Tweet replies so far, sleeping for {sleep_secs} seconds')
+                print(f'Iterated #{i} status Tweets, collected {len(all_replies)} Tweet replies so far, sleeping for {sleep_secs} seconds')
                 time.sleep(sleep_secs)
 
         except tweepy.TooManyRequests as e:
