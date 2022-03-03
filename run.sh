@@ -1,0 +1,1 @@
+python run.py --screen_name "TheDemocrats" --start_date "2022-03-04" --end_date "2022-02-25"
