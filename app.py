@@ -3,6 +3,7 @@ import os
 import json
 import time
 import logging
+import gc
 
 logging.basicConfig(level=logging.INFO)
 
@@ -116,7 +117,12 @@ def downloadTimeline(screen_name, startDate, endDate, data_dir, count=200):
 
   logging.info("Saved all tweets with replies")
 
-  mentioned_tweets_count = downloadMentionedTweets(screen_name, tweets_with_replies[-1].id, data_dir, startDate, endDate)
+  earliest_tweet = tweets_with_replies[-1].id
+
+  del tweets_with_replies
+  gc.collect()
+
+  mentioned_tweets_count = downloadMentionedTweets(screen_name, earliest_tweet, data_dir, startDate, endDate)
 
   logging.info("Saved all mentioned tweets")
 
@@ -159,6 +165,7 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
                         # Only limit by start and end date ranges
                         f.write(json.dumps(t._json) + '\n')
             mentionedTweets = []
+            gc.collect()
 
     with open(save_filepath, 'a') as f:
         # Write remaining Tweets to file again at the end, before returning
