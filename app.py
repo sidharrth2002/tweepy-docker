@@ -136,7 +136,7 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
     # 180 requests for every 15 minutes, which brings to 5 seconds for every request, which means that it's more effective to sleep 4 seconds, under the assumption there is a 1s processing time for every request
     # Not much justification towards why choosing this sleep value, but found that it works quite well
     # Works quite well
-    save_filename = f'saving_mentioned_tweets_{current_date_time}.json'
+    save_filename = f'saving_mentioned_tweets_{screen_name}_{current_date_time}.json'
     save_filepath = os.path.join(data_dir, save_filename)
 
     if save_filename not in os.listdir(data_dir):
