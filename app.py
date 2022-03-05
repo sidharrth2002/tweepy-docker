@@ -130,6 +130,9 @@ def downloadTimeline(screen_name, startDate, endDate, data_dir, count=200):
 
 def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate, count=200):
     '''Function which returns the mentioned Tweets of a particular brand, given a specific start date'''
+    if type(startDate) is str:
+        startDate = datetime.datetime(int(startDate.split('-')[0]), int(startDate.split('-')[1]), int(startDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
+        endDate = datetime.datetime(int(endDate.split('-')[0]), int(endDate.split('-')[1]), int(endDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
     mentionedTweets = []
     i = 0  # Pausing on every 200 Tweets (maximum count for Tweet retrievable)
     sleep_secs = 4
