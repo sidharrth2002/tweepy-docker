@@ -163,9 +163,9 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
         mentionedTweets.append(status)
         i += 1
 
-        if (status.created_at > endDate):
-            # Limit retrieving Tweets only start with since Tweet ID, and end at a specific date
-            break
+        # if (status.created_at > endDate):
+        #     # Limit retrieving Tweets only start with since Tweet ID, and end at a specific date
+        #     break
 
         if (i % count == 0):
             # Sleep for every 100 Tweets retrieved, due to Twitter API's rate limits
