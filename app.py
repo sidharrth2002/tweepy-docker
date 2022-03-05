@@ -141,9 +141,8 @@ def limit_handled(cursor):
 
 def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate, count=200):
     '''Function which returns the mentioned Tweets of a particular brand, given a specific start date'''
-    # if type(startDate) is str:
-    #     startDate = datetime.datetime(int(startDate.split('-')[0]), int(startDate.split('-')[1]), int(startDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
-    #     endDate = datetime.datetime(int(endDate.split('-')[0]), int(endDate.split('-')[1]), int(endDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
+    startDate_date = datetime.datetime(int(startDate.split('-')[0]), int(startDate.split('-')[1]), int(startDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
+    endDate_date = datetime.datetime(int(endDate.split('-')[0]), int(endDate.split('-')[1]), int(endDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
     logging.info(f"Downloading mentioned tweets for {screen_name} from {startDate} to {endDate}")
     mentionedTweets = []
     i = 0  # Pausing on every 200 Tweets (maximum count for Tweet retrievable)
@@ -176,7 +175,7 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
             # Write to file for every 10k JSON objects, then clear array, saves memory this way
             with open(save_filepath, 'a') as f:
                 for t in mentionedTweets:
-                    if (t.created_at >= startDate) and (t.created_at <= endDate):
+                    if (t.created_at >= startDate_date) and (t.created_at <= endDate_date):
                         # Only limit by start and end date ranges
                         f.write(json.dumps(t._json) + '\n')
             mentionedTweets = []
@@ -185,6 +184,6 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
     with open(save_filepath, 'a') as f:
         # Write remaining Tweets to file again at the end, before returning
         for t in mentionedTweets:
-            if (t.created_at >= startDate) and (t.created_at <= endDate):
+            if (t.created_at >= startDate_date) and (t.created_at <= endDate_date):
                 f.write(json.dumps(t._json) + '\n')
     return i
