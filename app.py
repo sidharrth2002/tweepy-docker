@@ -128,6 +128,17 @@ def downloadTimeline(screen_name, startDate, endDate, data_dir, count=200):
 
   return tweets_with_replies
 
+def limit_handled(cursor):
+    while True:
+        try:
+            yield next(cursor)
+        except tweepy.TooManyRequests as e:
+            time.sleep(15 * 60)
+        except tweepy.errors.TweepyException as e:
+            time.sleep(60)
+        except StopIteration:
+            break
+
 def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate, count=200):
     '''Function which returns the mentioned Tweets of a particular brand, given a specific start date'''
     if type(startDate) is str:
@@ -148,9 +159,8 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
         with open(save_filepath, 'w') as f:
             f.write('')
 
-    for status in tweepy.Cursor(api.search_tweets, q='@{}'.format(screen_name), tweet_mode='extended', count=count).items():
+    for status in limit_handled(tweepy.Cursor(api.search_tweets, q='@{}'.format(screen_name), tweet_mode='extended', count=count).items()):
         mentionedTweets.append(status)
-        print(status.created_at)
         i += 1
 
         if (status.created_at > endDate):
@@ -162,7 +172,8 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
             time.sleep(sleep_secs)
             print(f'Added mentioned Tweet #{i}, sleeping for {sleep_secs} seconds')
 
-        if (i % 10000 == 0):
+        if (i % 5000 == 0):
+            print(status.created_at)
             # Write to file for every 10k JSON objects, then clear array, saves memory this way
             with open(save_filepath, 'a') as f:
                 for t in mentionedTweets:
