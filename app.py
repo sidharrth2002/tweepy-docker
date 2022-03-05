@@ -141,9 +141,9 @@ def limit_handled(cursor):
 
 def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate, count=200):
     '''Function which returns the mentioned Tweets of a particular brand, given a specific start date'''
-    if type(startDate) is str:
-        startDate = datetime.datetime(int(startDate.split('-')[0]), int(startDate.split('-')[1]), int(startDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
-        endDate = datetime.datetime(int(endDate.split('-')[0]), int(endDate.split('-')[1]), int(endDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
+    # if type(startDate) is str:
+    #     startDate = datetime.datetime(int(startDate.split('-')[0]), int(startDate.split('-')[1]), int(startDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
+    #     endDate = datetime.datetime(int(endDate.split('-')[0]), int(endDate.split('-')[1]), int(endDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
     logging.info(f"Downloading mentioned tweets for {screen_name} from {startDate} to {endDate}")
     mentionedTweets = []
     i = 0  # Pausing on every 200 Tweets (maximum count for Tweet retrievable)
@@ -158,8 +158,7 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
         # If Tweets json file not available, create the data file
         with open(save_filepath, 'w') as f:
             f.write('')
-
-    for status in limit_handled(tweepy.Cursor(api.search_tweets, q='@{}'.format(screen_name), tweet_mode='extended', count=count).items()):
+    for status in limit_handled(tweepy.Cursor(api.search_tweets, q=f'@{screen_name} until:{endDate} since:{startDate}', tweet_mode='extended', count=count).items()):
         mentionedTweets.append(status)
         i += 1
 
