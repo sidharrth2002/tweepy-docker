@@ -1,1 +1,1 @@
-python3 run.py --screen_name "LPNational" --start_date "2022-02-25" --end_date "2022-03-04" --data_dir "./data"
+python3 run.py --screen_name "TheDemocrats" --start_date "2022-02-25" --end_date "2022-03-04" --data_dir "./data"

@@ -133,6 +133,7 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
     if type(startDate) is str:
         startDate = datetime.datetime(int(startDate.split('-')[0]), int(startDate.split('-')[1]), int(startDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
         endDate = datetime.datetime(int(endDate.split('-')[0]), int(endDate.split('-')[1]), int(endDate.split('-')[2]), tzinfo=timezone(offset=timedelta()))
+    logging.info(f"Downloading mentioned tweets for {screen_name} from {startDate} to {endDate}")
     mentionedTweets = []
     i = 0  # Pausing on every 200 Tweets (maximum count for Tweet retrievable)
     sleep_secs = 4
