@@ -159,7 +159,7 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
         with open(save_filepath, 'w') as f:
             f.write('')
 
-    for status in tweepy.Cursor(api.search_tweets, q='@{}'.format(screen_name), tweet_mode='extended', count=count).items():
+    for status in limit_handled(tweepy.Cursor(api.search_tweets, q='@{}'.format(screen_name), tweet_mode='extended', count=count).items()):
         mentionedTweets.append(status)
         i += 1
 
