@@ -149,6 +149,7 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
             f.write('')
 
     for status in tweepy.Cursor(api.search_tweets, q='@{}'.format(screen_name), since_id=tweet_id, tweet_mode='extended', count=count).items():
+        print('inside loop')
         mentionedTweets.append(status)
         i += 1
 
