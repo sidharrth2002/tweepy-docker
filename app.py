@@ -187,3 +187,53 @@ def downloadMentionedTweets(screen_name, tweet_id, data_dir, startDate, endDate,
             if (t.created_at >= startDate_date) and (t.created_at <= endDate_date):
                 f.write(json.dumps(t._json) + '\n')
     return i
+
+def downloadMentionedTweetsLooped(screen_name, tweet_id, data_dir, startDate, endDate, count=200):
+    save_filename = f'saving_mentioned_tweets_{screen_name}_{current_date_time}.json'
+    save_filepath = os.path.join(data_dir, save_filename)
+
+    max_id = -1
+    # however many you want to limit your collection to. how much storage space do you have?
+    maxTweets = 10000000
+    sinceId = None
+
+    tweetCount = 0
+    searchQuery = f'@{screen_name}'  # this is what we're searching for
+    tweetsPerQry = 200  # this is the max the API permits
+
+    sleep_secs = 4
+
+    print("Downloading max {0} tweets".format(maxTweets))
+    with open(save_filepath, 'w') as f:
+        while tweetCount < maxTweets:
+            try:
+                if (max_id <= 0):
+                    if (not sinceId):
+                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry)
+                    else:
+                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
+                                                since_id=sinceId)
+                else:
+                    if (not sinceId):
+                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
+                                                max_id=str(max_id - 1))
+                    else:
+                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
+                                                max_id=str(max_id - 1),
+                                                since_id=sinceId)
+                if not new_tweets:
+                    print("No more tweets found")
+                    break
+                for tweet in new_tweets:
+                    f.write(json.dumps(tweet._json) + '\n')
+                tweetCount += len(new_tweets)
+                print("Downloaded {0} tweets".format(tweetCount))
+                max_id = new_tweets[-1].id
+                print(f"Sleeping for {sleep_secs} seconds")
+                time.sleep(sleep_secs)
+            except tweepy.TweepError as e:
+                # Just exit if any error
+                print("some error : " + str(e))
+                break
+
+    print ("Downloaded {0} tweets, Saved to {1}".format(tweetCount, save_filepath))

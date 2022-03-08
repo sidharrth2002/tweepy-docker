@@ -1,6 +1,6 @@
 import argparse
 
-from app import downloadMentionedTweets, downloadTimeline
+from app import downloadMentionedTweetsLooped, downloadTimeline
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--screen_name", help="Twitter screen name", required=True)
@@ -11,4 +11,4 @@ parser.add_argument("--data_dir", help="Directory to save data")
 args = parser.parse_args()
 
 # downloadTimeline(args.screen_name, args.start_date, args.end_date, args.data_dir)
-downloadMentionedTweets(args.screen_name, 1497007436783366150, args.data_dir, args.start_date, args.end_date)
+downloadMentionedTweetsLooped(args.screen_name, 1497007436783366150, args.data_dir, args.start_date, args.end_date)
