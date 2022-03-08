@@ -209,16 +209,16 @@ def downloadMentionedTweetsLooped(screen_name, tweet_id, data_dir, startDate, en
             try:
                 if (max_id <= 0):
                     if (not sinceId):
-                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry)
+                        new_tweets = api.search_tweets(q=searchQuery, count=tweetsPerQry)
                     else:
-                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
+                        new_tweets = api.search_tweets(q=searchQuery, count=tweetsPerQry,
                                                 since_id=sinceId)
                 else:
                     if (not sinceId):
-                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
+                        new_tweets = api.search_tweets(q=searchQuery, count=tweetsPerQry,
                                                 max_id=str(max_id - 1))
                     else:
-                        new_tweets = api.search(q=searchQuery, count=tweetsPerQry,
+                        new_tweets = api.search_tweets(q=searchQuery, count=tweetsPerQry,
                                                 max_id=str(max_id - 1),
                                                 since_id=sinceId)
                 if not new_tweets:
