@@ -1,1 +1,1 @@
-python3 run.py --screen_name "LPNational" --start_date "2022-02-24" --end_date "2022-02-26" --data_dir "./data"
+python3 run.py --screen_name "state of the union" --start_date "2022-02-24" --end_date "2022-02-26" --data_dir "./data"
