@@ -231,7 +231,7 @@ def downloadMentionedTweetsLooped(screen_name, tweet_id, data_dir, startDate, en
                 max_id = new_tweets[-1].id
                 print(f"Sleeping for {sleep_secs} seconds")
                 time.sleep(sleep_secs)
-            except tweepy.TweepError as e:
+            except tweepy.errors.TweepyException as e:
                 # Just exit if any error
                 print("some error : " + str(e))
                 break
