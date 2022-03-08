@@ -198,7 +198,8 @@ def downloadMentionedTweetsLooped(screen_name, tweet_id, data_dir, startDate, en
     sinceId = None
 
     tweetCount = 0
-    searchQuery = f'@{screen_name}'  # this is what we're searching for
+    searchQuery = screen_name  # this is what we're searching for
+    # searchQuery = f'@{screen_name}'  # this is what we're searching for
     tweetsPerQry = 200  # this is the max the API permits
 
     sleep_secs = 4
