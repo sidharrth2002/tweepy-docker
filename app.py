@@ -55,7 +55,7 @@ def get_replies(tweets, tweet_ids, user_name, data_dir='./data'):
                 if 'replies' not in tweets[index]._json:
                     tweets[index]._json['replies'] = []
                 tweets[index]._json['replies'].append(reply._json)
-                logging.info("reply of tweet:{}".format(reply.full_text))
+                # logging.info("reply of tweet:{}".format(reply.full_text))
                 all_replies.append(reply)
             if (i % count == 0):
                 print(f'Iterated #{i} status Tweets, collected {len(all_replies)} Tweet replies so far, sleeping for {sleep_secs} seconds')
@@ -115,6 +115,7 @@ def downloadTimeline(screen_name, startDate, endDate, data_dir, count=200):
   # save tweets with replies
   save_list_to_json(f'{screen_name}_tweets_replies.json', tweets_with_replies, data_dir)
 
+  logging.info(f'Tweet created at {results[-1].created_at}')
   logging.info("Saved all tweets with replies")
 
   earliest_tweet = tweets_with_replies[-1].id
