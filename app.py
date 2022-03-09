@@ -123,7 +123,7 @@ def downloadTimeline(screen_name, startDate, endDate, data_dir, count=200):
   del tweets_with_replies
   gc.collect()
 
-  mentioned_tweets_count = downloadMentionedTweets(screen_name, earliest_tweet, data_dir, startDate, endDate)
+  mentioned_tweets_count = downloadMentionedTweetsLooped(screen_name, earliest_tweet, data_dir, startDate, endDate)
 
   logging.info("Saved all mentioned tweets")
 
@@ -199,8 +199,8 @@ def downloadMentionedTweetsLooped(screen_name, tweet_id, data_dir, startDate, en
     sinceId = None
 
     tweetCount = 0
-    searchQuery = screen_name  # this is what we're searching for
-    # searchQuery = f'@{screen_name}'  # this is what we're searching for
+    # searchQuery = screen_name  # this is what we're searching for
+    searchQuery = f'@{screen_name}'  # this is what we're searching for
     tweetsPerQry = 200  # this is the max the API permits
 
     sleep_secs = 4
