@@ -11,4 +11,4 @@ parser.add_argument("--data_dir", help="Directory to save data")
 args = parser.parse_args()
 
 # downloadTimeline(args.screen_name, args.start_date, args.end_date, args.data_dir)
-downloadMentionedTweetsLooped(args.screen_name, 1497007436783366150, args.data_dir, args.start_date, args.end_date)
+downloadTimeline(args.screen_name, args.start_date, args.end_date, args.data_dir)
