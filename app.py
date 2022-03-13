@@ -195,7 +195,7 @@ def downloadMentionedTweetsLooped(screen_name, tweet_id, data_dir, startDate, en
 
     max_id = -1
     # however many you want to limit your collection to. how much storage space do you have?
-    maxTweets = 10000000
+    maxTweets = 10000
     sinceId = None
 
     tweetCount = 0
